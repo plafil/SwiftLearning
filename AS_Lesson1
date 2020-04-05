@@ -1,0 +1,7 @@
+let name = "Filipp"
+let surname = "Plakhotin"
+let height = 1.84
+let weight = 67
+let age = 26
+
+print ("Student characteristics.\nName and surname: \(name) \(surname)\nAge: \(age)\nHeight: \(height) m\nWeight: \(weight) kg")
