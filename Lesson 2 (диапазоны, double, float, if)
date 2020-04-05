@@ -1,0 +1,15 @@
+print("Диапазон чисел Int: от \(Int.min) до \(Int.max)\nДиапазон чисел Int8: от \(Int8.min) до \(Int8.max)\nДиапазон чисел UInt8: от \(UInt8.min) до \(UInt8.max)")
+
+let a: Int = 5
+let b: Float = 6.5
+let c: Double = 10.23562
+
+let s1: Int = a + Int(b) + Int(c)
+let s2: Float = Float(a) + b + Float(c)
+let s3: Double = Double(a) + Double(b) + c
+
+if Double(s1) < s3 {
+    print("Сумма значений в формате Double (s3 = \(s3)) точнее суммы в формате Int (s1 = \(s1))")
+} else {
+    print("Int точнее Double!")
+}
