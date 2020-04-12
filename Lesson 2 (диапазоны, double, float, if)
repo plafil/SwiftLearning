@@ -1,13 +1,17 @@
+// 1. При помощи print вывести диапазоны Int, Int8, UInt8
 print("Диапазон чисел Int: от \(Int.min) до \(Int.max)\nДиапазон чисел Int8: от \(Int8.min) до \(Int8.max)\nДиапазон чисел UInt8: от \(UInt8.min) до \(UInt8.max)")
 
+/* 2.1. Создать 3 константы - Int, Float, Double
+ 2.2. Создать еще 3 константы, каждая из которых является суммой 3-х констант из п. 2.1 - Int, Float, Double */
 let a = 5
 let b: Float = 6.5
 let c = 10.23562
 
-let s1  = a + Int(b) + Int(c)
+let s1  = Int(Double(a) + Double(b) + c)
 let s2 = Float(a) + b + Float(c)
 let s3 = Double(a) + Double(b) + c
 
+// 3.  Создать условие - если Int из п. 2.2 меньше Double, то вывести "Double точнее". В ином случае вывести любую фразу.
 if Double(s1) < s3 {
     print("Сумма значений в формате Double (s3 = \(s3)) точнее суммы в формате Int (s1 = \(s1))")
 } else {
