@@ -1,1 +1,21 @@
+//1. Создать Tuple из 3 значений - max число отжиманий, подтягиваний, приседаний. Каждый параметр должен быть с именем.
+var tuplePokazOne = (otzhim: 10, podt: 6, prised: 20)
 
+//2. Распечатать tuple через print
+print(tuplePokazOne)
+
+//3. Распечатать tuple через print, каждый параметр на своей строке и со своим именем. Часть параметров вывести при помощи индекса, часть при помощи имени.
+print("Я делаю:\n\(tuplePokazOne.0) отжиманий,\n\(tuplePokazOne.podt) подтягиваний,\n\(tuplePokazOne.prised) приседаний.")
+
+//4. Создать Tuple, аналогичный п. 1, но для другого человека.
+var tuplePokazTwo = (otzhim: 5, podt: 2, prised: 30)
+
+//5. Поменять местами значения из Tuple (1) и Tuple (4), используя "промежуточную" переменную.
+var tupleMiddle = tuplePokazOne
+tuplePokazOne = tuplePokazTwo
+tuplePokazTwo = tupleMiddle
+print(tuplePokazOne, tuplePokazTwo)
+
+//6. Посчитать разницу в значениях между Tuple (1) и Tuple (4).
+var tupleDifference = (otzhim: tuplePokazTwo.otzhim - tuplePokazOne.otzhim, podt: tuplePokazTwo.podt - tuplePokazOne.podt, prised: tuplePokazTwo.prised - tuplePokazOne.prised)
+print(tupleDifference)
