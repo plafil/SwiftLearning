@@ -1,0 +1,163 @@
+// 1. Создать 5 констант (строки), часть только из цифр, часть из букв и цифр либо только из букв. Найти сумму всех констант, приведя их к Int. Часть использовать через optional binding, часть через forced unwrapping.
+let stringOne = "522"
+let stringTwo = "dfh235"
+let stringThree = "940"
+let stringFour = "dfhehw"
+let stringFive = "814azv"
+
+let stringIntOne = Int(stringOne)
+let stringIntTwo = Int(stringTwo)
+let stringIntThree = Int(stringThree)
+let stringIntFour = Int(stringFour)
+let stringIntFive = Int(stringFive)
+
+var sumStrings = 0
+
+if stringIntOne != nil {
+    sumStrings += stringIntOne!
+}
+if let number = stringIntTwo {
+    sumStrings += number
+}
+if let number = stringIntThree {
+    sumStrings += number
+}
+if let number = stringIntFour {
+    sumStrings += number
+}
+if let number = stringIntFive {
+    sumStrings += number
+}
+
+print("Sum of the Strings 1 to 5 changed to Int = \(sumStrings)")
+
+// 2. Получаем tuple с 3 параметрами - status code (Int), message (String?), error message (String?). Если status code от 200 до 300, показать message. Если в другом диапазоне - показать error message. Далее создать tuple с 2 параметрами - message и error message (1 из них всегда nil, нужно показать строку, которая не nil).
+let tuple : (statusCode: Int, message: String?, errorMessage: String?)
+tuple = (200, "message", "error")
+
+if tuple.statusCode >= 200 && tuple.statusCode <= 300 {
+    if let mes = tuple.message {
+        print(mes)
+    }
+} else {
+    if let err = tuple.errorMessage {
+        print(err)
+    }
+}
+
+let tupleTwo : (message: String?, errorMessage: String?)
+tupleTwo = (nil, "error")
+
+if let mes = tupleTwo.message {
+    print(mes)
+}
+
+if let err = tupleTwo.errorMessage {
+    print(err)
+}
+
+// 3. Создать tuple с 3 параметрами - имя студента, номер машины, оценка за предыдущую контрольную. Все данные при создании должны быть nil, создать ~5 tuple для 5 разных человек. Сначала заполнить имена. Далее, если есть машина, добавить номера машин. Далее, если студент писал контрольную, добавить оценку. После этого в print вывести информацию для каждого студента.
+var studOne : (name: String?, carNumber: String?, mark: Int?)
+var studTwo : (name: String?, carNumber: String?, mark: Int?)
+var studThree : (name: String?, carNumber: String?, mark: Int?)
+var studFour : (name: String?, carNumber: String?, mark: Int?)
+var studFive : (name: String?, carNumber: String?, mark: Int?)
+
+studOne.name = "Alex"
+studTwo.name = "Ben"
+studThree.name = "Caroline"
+studFour.name = "David"
+studFive.name = "Erica"
+
+studOne.carNumber = "A123BC"
+studThree.carNumber = "D456EF"
+studFive.carNumber = "G789HI"
+
+studOne.mark = 5
+studTwo.mark = 4
+studThree.mark = 3
+
+print("\nStudent No. 1:")
+if let name = studOne.name {
+    print("- name: \(name);")
+} else {
+    print("- Noname;")
+}
+if let num = studOne.carNumber {
+    print("- car number: \(num);")
+} else {
+    print("- don't have a car;")
+}
+if let mark = studOne.mark {
+    print("- mark for the last exam: \(mark).")
+} else {
+    print("- haven't written the last exam.")
+}
+
+print("\nStudent No. 2:")
+if let name = studTwo.name {
+    print("- name: \(name);")
+} else {
+    print("- Noname;")
+}
+if let num = studTwo.carNumber {
+    print("- car number: \(num);")
+} else {
+    print("- don't have a car;")
+}
+if let mark = studTwo.mark {
+    print("- mark for the last exam: \(mark).")
+} else {
+    print("- haven't written the last exam.")
+}
+
+print("\nStudent No. 3:")
+if let name = studThree.name {
+    print("- name: \(name);")
+} else {
+    print("- Noname;")
+}
+if let num = studThree.carNumber {
+    print("- car number: \(num);")
+} else {
+    print("- don't have a car;")
+}
+if let mark = studThree.mark {
+    print("- mark for the last exam: \(mark).")
+} else {
+    print("- haven't written the last exam.")
+}
+
+print("\nStudent No. 4:")
+if let name = studFour.name {
+    print("- name: \(name);")
+} else {
+    print("- Noname;")
+}
+if let num = studFour.carNumber {
+    print("- car number: \(num);")
+} else {
+    print("- don't have a car;")
+}
+if let mark = studFour.mark {
+    print("- mark for the last exam: \(mark).")
+} else {
+    print("- haven't written the last exam.")
+}
+
+print("\nStudent No. 5:")
+if let name = studFive.name {
+    print("- name: \(name);")
+} else {
+    print("- Noname;")
+}
+if let num = studFive.carNumber {
+    print("- car number: \(num);")
+} else {
+    print("- don't have a car;")
+}
+if let mark = studFive.mark {
+    print("- mark for the last exam: \(mark).")
+} else {
+    print("- haven't written the last exam.")
+}
