@@ -1,0 +1,18 @@
+// 1. Посчитать кол-во секунд с начала года до 00:00 своего дня рождения (високосный год можно проигнорировать).
+let secInDay = 60 * 60 * 24
+//birthday - November, 1st
+let secondsToBirthday = (31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31) * secInDay
+print("There are \(secondsToBirthday) seconds from the start of the year to my birthday")
+
+// 2. Посчитать в каком квартале свой день рождения.
+let monthBirthday = 11
+let qBirthday = monthBirthday / 3 + 1
+print("My burthday is in the \(qBirthday) quarter")
+
+// 3. Есть шахматная доска (64 клетки), по вертикали и горизонтали 1-8. Определить, какие поля черные и белые.
+let pole = (x: 2, y: 7)
+if (pole.x + pole.y) % 2 == 0 {
+    print("Square (x = \(pole.x), y = \(pole.y)) is black")
+} else {
+    print("Square (x = \(pole.x), y = \(pole.y)) is white")
+}
