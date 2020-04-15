@@ -1,0 +1,67 @@
+//1. 5 констант строк (в части только цифры, в части различные символы), посчитать сумму всех строк с помощью оператора ??. После этого все выражение сложения записать в строке (1 - используя интерполяцию строк; 2 - используя конкатенацию) и распечатать.
+let strA = "167"
+let strB = "2h2jh23"
+let strC = "dfhwh"
+let strD = "851"
+let strE = "346h32k"
+
+let intA = Int(strA) ?? 0
+let intB = Int(strB) ?? 0
+let intC = Int(strC) ?? 0
+let intD = Int(strD) ?? 0
+let intE = Int(strE) ?? 0
+let sum = intA + intB + intC + intD + intE
+
+let fullA, fullB, fullC, fullD, fullE : String
+
+if let a = Int(strA) {
+    fullA = "\(a)"
+} else {
+    fullA = "nil"
+}
+if let a = Int(strB) {
+    fullB = "\(a)"
+} else {
+    fullB = "nil"
+}
+if let a = Int(strC) {
+    fullC = "\(a)"
+} else {
+    fullC = "nil"
+}
+if let a = Int(strD) {
+    fullD = "\(a)"
+} else {
+    fullD = "nil"
+}
+if let a = Int(strE) {
+    fullE = "\(a)"
+} else {
+    fullE = "nil"
+}
+
+// 1.1. Интерполяция
+let sumInter = "\(fullA) + \(fullB) + \(fullC) + \(fullD) + \(fullE) = \(sum)"
+print(sumInter)
+// 2.2. Конкатенация
+let sumConcat = fullA + " + " + fullB + " + " + fullC + " + " + fullD + " + " + fullE + " = \(sum)"
+print(sumConcat)
+
+//2. Выбрать 5 любых unicode-characters, записать в строку и посчитать ее длину (при помощи инструментов Swift и  Obj-C)
+import Foundation
+
+let uniString = "\u{2602}" + "\u{2603}" + "\u{261D}" + "\u{26E9}" + "\u{26F0}"
+uniString.count
+(uniString as NSString).length
+
+//3. Создать строку из всех букв английского алфавита. Далее с использованием цикла for найти индекс любой буквы в строке.
+let alphabet = "abcdefghijklmnopqrstuvwxyz"
+let letter : Character = "z"
+var num = 0
+
+for i in alphabet {
+    num += 1
+    if letter == i {
+        print("Number of letter \(letter) is \(num)")
+    }
+}
