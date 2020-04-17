@@ -1,0 +1,56 @@
+// 1. Создать Dictionary "Журнал студентов". Ключ - имя и фамилия студента; значение - оценка за контрольную.
+var students = ["Ivan Petrov" : 5 , "Semen Sergeev" : 4, "Egor Ivanov" : 2, "Alexey Savelyev": 4]
+// Повысить оценку нескольким студентам
+students["Semen Sergeev"] = 5
+students["Egor Ivanov"] = 4
+
+// Добавить несколько студентов с оценками
+students["Alena Alekseeva"] = 3
+students["Vladimir Yashin"] = 2
+students["Elena Orlova"] = 4
+
+// Несколько студентов ушли - удалить их из журнала
+students.removeValue(forKey: "Ivan Petrov")
+students.removeValue(forKey: "Egor Ivanov")
+
+print("Journal of the students and their marks: \(students)")
+
+// Посчитать общий балл группы и средний балл
+var sumMarks = 0
+var avgMarks: Float = 0
+if students.isEmpty == false {
+    for i in students.keys {
+        sumMarks += (students[i] ?? 0)
+    }
+    avgMarks = Float(sumMarks) / Float(students.count)
+    print("Sum of the students' marks = \(sumMarks)\nAverage value of the students' marks = \(avgMarks)\n")
+} else {
+    print("There are no students in the group\n")
+}
+
+
+// 2. Создать Dictionary с месяцами (ключ - название месяца; значение - число дней в месяце).
+let months = ["January" : 31, "February" : 28, "March" : 31, "April": 30, "May" : 31, "June": 30, "July" : 31, "August" : 31, "September" : 30, "October" : 30, "November" : 30, "December" : 31]
+// Вывести на экран при помощи цикла for двумя методами - через Tuple (1) и через массив ключей (2).
+//tuple
+for (key, value) in months {
+    print("1_Month: \(key); days count in this month: \(value);")
+}
+// keys' array
+for key in months.keys {
+    print("2_Month: \(key), days in month: \(months[key] ?? 0)")
+}
+
+
+// 3. Создать Dictionary: ключ - название ячейки шахматной доски (A5, E6 и т.д.), значение - bool (true - белая ячейка, false - черная). Использовать массив для букв в ключах (названиях ячейки), для которых указывать цифры от 1 до 8.
+var chess = [String:Bool]()
+let letters = ["A", "B", "C", "D", "E", "F", "G", "H"]
+for letNum in 0..<letters.count {
+    for num in 1...8 {
+        if (letNum + 1 + num) % 2 != 0 {
+            chess["\(letters[letNum])\(num)"] = true
+        } else {
+            chess["\(letters[letNum])\(num)"] = false
+        }
+    }
+}
