@@ -1,0 +1,78 @@
+// 1. Создать строку произвольного текста из ~ 200 символов. Создать цикл for с встроенным switch и посчитать кол-во гласных, согласных, цифр, различных символов в строке.
+let twoHun = "Hello! My name is Filipp. Today I want to create a tring counting at least 200 symbols. Reason of this creation is learning Swift language for application development. I think this string is very good"
+var vowels = 0, consonants = 0, numbers = 0, symbols = 0, spaces = 0
+
+for char in twoHun {
+switch char {
+case "a", "A", "e", "E", "i", "I", "o", "O", "u", "U", "y", "Y":
+    vowels += 1
+case "b", "B", "c", "C", "d", "D", "f", "F", "g", "G", "h", "H", "j", "J", "k", "K", "l", "L", "m", "M", "n", "N", "p", "P", "q", "Q", "r", "R", "s", "S", "t", "T", "v", "V", "w", "W", "x", "X", "z", "Z":
+    consonants += 1
+case "1", "2", "3", "4", "5", "6", "7", "8", "9", "0":
+    numbers += 1
+case " ":
+    spaces += 1
+default:
+    symbols += 1
+}
+}
+
+print("In my string of \(twoHun.count) symbols there are \(vowels) vowels, \(consonants) consonants, \(numbers) numerals, \(symbols) different symbols (e.g. ! , . etc.) and \(spaces) spaces")
+
+
+// 2. Создать switch, который будет принимать возраст человека и выводить описание периода жизни.
+let age: UInt8 = 99
+switch  age {
+case 0...2:
+    print("\(age) yeras: baby")
+case 3...5:
+    print("\(age) yeras: kindergarden")
+case 6...10:
+    print("\(age) yeras: primary school")
+case 11...16:
+    print("\(age) yeras: secondary school")
+case 17...23:
+    print("\(age) yeras: university")
+case 24...29:
+    print("\(age) yeras: young adult")
+case 30...39:
+    print("\(age) yeras: adult")
+case 40...49:
+    print("\(age) yeras: middle age")
+case 50...59:
+    print("\(age) yeras: adult near to old")
+case 60...79:
+    print("\(age) yeras: grandparent")
+case 80...99:
+    print("\(age) yeras: really old man")
+case 100...139:
+    print("\(age) yeras: old man over 100 years")
+default:
+    print("You've entered age of \(age): people can't live so many years, please write another age.")
+}
+
+
+// 3. Есть студент с фамилией, именем и отчеством (3 строки). Если имя начинается с А или О - обращаться по имени; в противном случае, если отчество начинается с В или Д - обращаться по имени и отчеству; в противном случае, если фамилия начинается с Е или З - обращаться по фамилии; если ни одно не сработало - обращаться по фамилии, имени и отчеству.
+let fullName = (surname: "Иванов", name: "Иван", patronymic: "Васильевич")
+switch fullName {
+case (_, let n, _) where n.hasPrefix("А") || n.hasPrefix("О"):
+    print(n)
+case (_, _, let p) where p.hasPrefix("В") || p.hasPrefix("Д"):
+    print(fullName.name, p)
+case (let s, _, _) where s.hasPrefix("Е") || s.hasPrefix("З"):
+    print(s)
+default:
+    print(fullName.surname, fullName.name, fullName.patronymic)
+}
+
+// 4. Есть поле для игры в морской бой 10х10. Осталось несколько кораблей. Создать switch, который будет получать tuple с координатами, из которого необходимо вернуть одно из 3 значений - "мимо", "ранил" или "убил".
+let coord = (x: "C", y: 3)
+
+switch coord {
+case ("C", 3):
+    print("убил")
+case ("H", 3...4), ("B", 6...9), ("E", 8), ("F", 8), ("G", 8):
+    print("ранил")
+default:
+    print("мимо")
+}
