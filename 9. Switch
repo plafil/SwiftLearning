@@ -3,21 +3,20 @@ let twoHun = "Hello! My name is Filipp. Today I want to create a tring counting 
 var vowels = 0, consonants = 0, numbers = 0, symbols = 0, spaces = 0
 
 for char in twoHun {
-switch char {
-case "a", "A", "e", "E", "i", "I", "o", "O", "u", "U", "y", "Y":
-    vowels += 1
-case "b", "B", "c", "C", "d", "D", "f", "F", "g", "G", "h", "H", "j", "J", "k", "K", "l", "L", "m", "M", "n", "N", "p", "P", "q", "Q", "r", "R", "s", "S", "t", "T", "v", "V", "w", "W", "x", "X", "z", "Z":
-    consonants += 1
-case "1", "2", "3", "4", "5", "6", "7", "8", "9", "0":
-    numbers += 1
-case " ":
-    spaces += 1
-default:
-    symbols += 1
+    switch char {
+    case "a", "A", "e", "E", "i", "I", "o", "O", "u", "U", "y", "Y":
+        vowels += 1
+    case "b", "B", "c", "C", "d", "D", "f", "F", "g", "G", "h", "H", "j", "J", "k", "K", "l", "L", "m", "M", "n", "N", "p", "P", "q", "Q", "r", "R", "s", "S", "t", "T", "v", "V", "w", "W", "x", "X", "z", "Z":
+        consonants += 1
+    case "1", "2", "3", "4", "5", "6", "7", "8", "9", "0":
+        numbers += 1
+    case " ":
+        spaces += 1
+    default:
+        symbols += 1
+    }
 }
-}
-
-print("In my string of \(twoHun.count) symbols there are \(vowels) vowels, \(consonants) consonants, \(numbers) numerals, \(symbols) different symbols (e.g. ! , . etc.) and \(spaces) spaces")
+print("There are \(vowels) vowels, \(consonants) consonants, \(numbers) numerals, \(symbols) different symbols (e.g. ! , . etc.) and \(spaces) spaces in my string of \(twoHun.count) symbols.")
 
 
 // 2. Создать switch, который будет принимать возраст человека и выводить описание периода жизни.
