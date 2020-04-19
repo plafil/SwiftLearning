@@ -1,0 +1,119 @@
+// 1. Создать 2-3 функции, которые будут возвращать строку с каким-либо символом (Unicode). Далее распечатать в одном print.
+func ball() -> Character {
+    return "\u{26bd}"
+}
+
+func scorp() -> Character {
+    return "\u{1f982}"
+}
+
+func scoot() -> Character {
+    return "\u{1f6f4}"
+}
+
+print("These are the returns of the 3 simple functions:", ball(), scorp(), scoot())
+
+
+// 2. Создать функцию для шахматной доски, которая будет принимать 2 параметра - строка (A-H) и символ (1-8), возвращать строку "белая" или "черная" (в зависимости от цвета клетки шахматной доски). Далее забирать возвращаемую строку в новую константу и распечатывать данную константу.
+func chess(letter: Character, number: Int) -> String {
+    switch letter {
+    case "A", "C", "E", "G":
+        if number % 2 == 0 {
+            return "white"
+        } else {
+            return "black"
+        }
+    case "B", "D", "F", "H":
+        if number % 2 == 0 {
+            return "black"
+        } else {
+            return "white"
+        }
+    default:
+        return "you wrote an incorrect chess square adress"
+    }
+}
+
+let result = chess(letter: "D", number: 5)
+print(result)
+
+
+// 3. Создать массив и функцию, которая будет принимать данный массив и возвращать его в обратном порядке. Создать 2-ю функцию - с входящим параметром sequence вместо array (сделать так, чтобы функция с последовательностью вызывала первую с массивом).
+let array = [1, 2, 3, 4, 5]
+func arrayAround(_ arr: [Int]) -> [Int] {
+    var arrNew = arr
+    let count = arrNew.count / 2
+    for i in 0..<count {
+        let a = arrNew[i]
+        let num = arrNew.count - 1 - i
+        arrNew[i] = arrNew[num]
+        arrNew[num] = a
+    }
+    return arrNew
+}
+arrayAround(array)
+
+func seqAround(_ seq: Int...) -> [Int] {
+    return arrayAround(seq)
+}
+seqAround(1, 2, 3, 4, 5)
+
+
+// 4. Создать функцию, которая принимает массив, при помощи  in-out меняет в массиве все элементы (делает их в обратном порядке), но ничего не возвращает.
+func aroundInout(_ arr: inout [Int]) {
+    let count = arr.count / 2
+    for i in 0..<count {
+        let a = arr[i]
+        let num = arr.count - 1 - i
+        arr[i] = arr[num]
+        arr[num] = a
+    }
+}
+
+var arrOfInt = [5, 8, 11, 3, 2]
+aroundInout(&arrOfInt)
+arrOfInt
+
+
+// 5. Создать функцию, которая принимает строку и будет возвращать строку, в которой все знаки препинания будут убраны (заменить на пробелы), все гласные будут переведены в заглавные, все согласные переведены в прописные, цифры изменены на слова (1 - one и т.д.).
+func changing(_ str: String) -> String {
+    let strLow = str.lowercased()
+    var strNew = ""
+    var char = ""
+    for i in strLow {
+        switch i {
+        case ",", ".", "!", "?", ":", ";", "-":
+            char = " "
+        case "a", "e", "i", "o", "u", "y":
+            char = i.uppercased()
+        case "1":
+            char = "one_"
+        case "2":
+            char = "two_"
+        case "3":
+            char = "three_"
+        case "4":
+            char = "four_"
+        case "5":
+            char = "five_"
+        case "6":
+            char = "six_"
+        case "7":
+            char = "seven_"
+        case "8":
+            char = "eight_"
+        case "9":
+            char = "nine_"
+        case "0":
+            char = "zero_"
+        default:
+            char = String(i)
+        }
+        strNew.append(char)
+        
+    }
+    return strNew
+}
+
+let strOne = "Hello! My name is Filipp. I was borned in 1993. Now I am 26. My mobile number is 8-123-456-78-90"
+print(changing(strOne))
