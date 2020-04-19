@@ -18,23 +18,15 @@ print("These are the returns of the 3 simple functions:", ball(), scorp(), scoot
 func chess(letter: Character, number: Int) -> String {
     switch letter {
     case "A", "C", "E", "G":
-        if number % 2 == 0 {
-            return "white"
-        } else {
-            return "black"
-        }
+        return (number % 2 == 0) ? "The chess square \(letter)\(number) is white." : "The chess square \(letter)\(number) is black."
     case "B", "D", "F", "H":
-        if number % 2 == 0 {
-            return "black"
-        } else {
-            return "white"
-        }
+        return (number % 2 == 0) ? "The chess square \(letter)\(number) is black." : "The chess square \(letter)\(number) is white."
     default:
         return "you wrote an incorrect chess square adress"
     }
 }
 
-let result = chess(letter: "D", number: 5)
+let result = chess(letter: "С", number: 5)
 print(result)
 
 
