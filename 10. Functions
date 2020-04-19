@@ -16,17 +16,21 @@ print("These are the returns of the 3 simple functions:", ball(), scorp(), scoot
 
 // 2. Создать функцию для шахматной доски, которая будет принимать 2 параметра - строка (A-H) и символ (1-8), возвращать строку "белая" или "черная" (в зависимости от цвета клетки шахматной доски). Далее забирать возвращаемую строку в новую константу и распечатывать данную константу.
 func chess(letter: Character, number: Int) -> String {
+if number >= 1 && number <= 8 {
     switch letter {
     case "A", "C", "E", "G":
         return (number % 2 == 0) ? "The chess square \(letter)\(number) is white." : "The chess square \(letter)\(number) is black."
     case "B", "D", "F", "H":
         return (number % 2 == 0) ? "The chess square \(letter)\(number) is black." : "The chess square \(letter)\(number) is white."
     default:
-        return "you wrote an incorrect chess square adress"
+        return "You've written an incorrect letter - should be from A to H (english letters)."
+    }
+} else {
+    return "You've written an incorrect number - should be from 1 to 8."
     }
 }
 
-let result = chess(letter: "С", number: 5)
+let result = chess(letter: "D", number: 4)
 print(result)
 
 
