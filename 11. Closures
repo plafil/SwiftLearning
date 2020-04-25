@@ -8,7 +8,9 @@ func exOne(_ closure: () -> ()) {
     closure()
 }
 
-exOne() {print("closure calling\n")}
+exOne() {
+    print("closure calling\n")
+}
 
 
 //2. Используя метод массивов sorted, отсортируйте массив интов по возрастанию и убыванию. Пример показан в методичке.
