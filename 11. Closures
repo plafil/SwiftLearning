@@ -8,7 +8,7 @@ func exOne(_ closure: () -> ()) {
     closure()
 }
 
-exOne() {
+exOne {
     print("closure calling\n")
 }
 
