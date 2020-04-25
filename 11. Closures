@@ -20,37 +20,31 @@ newArr.sorted(by: >) // по убыванию
 
 
 //3. Напишите функцию, которая принимает массив интов и клоужер и возвращает инт. Клоужер должен принимать 2 инта (один опшинал) и возвращать да или нет. В самой функции создайте опшинал переменную. Вы должны пройтись в цикле по массиву интов и сравнивать элементы с переменной используя клоужер. Если клоужер возвращает да, то вы записываете значение массива в переменную. в конце функции возвращайте переменную. Используя этот метод и этот клоужер найдите максимальный и минимальный элементы массива.
-func exThree(_ arr: [Int], _ clos: (Int?, Int) -> Bool) -> Int? {
+func exThree(_ arr: [Int], _ clos: (Int?, Int) -> Bool) -> Int {
     var a: Int?
     for i in arr {
         if clos(a, i) {
             a = i
         }
     }
-    return a
+    return a ?? 0
     }
 
 let arrThree = [5, 2, 9, 14, 12, 215, 60, 1, 4]
 let minOfArr = exThree(arrThree, {$0 != nil ? $0! > $1 : true})
 let maxOfArr = exThree(arrThree, {$0 != nil ? $0! < $1 : true})
-print("Maximum is \(maxOfArr!), minimum is \(minOfArr!)")
+print("Maximum is \(maxOfArr), minimum is \(minOfArr)")
 
 
 //4. Создайте произвольную строку. Преобразуйте ее в массив букв. Используя метод массивов sorted отсортируйте строку так, чтобы в начале шли гласные в алфавитном порядке, потом согласные, потом цифры, а потом символы
-let string = "hgawrtyw463.345se!g2?offu"
-var arrString = [Character]()
-for i in string {
-    arrString.append(i)
-}
+let string = "hGaWrtyw463.345se!g2?offU"
+var arrString = Array(string)
 
-arrString
-
-let arrAlph : [Character] = ["a", "e", "i", "o", "u", "y", "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+let arrAlph : [String] = ["a", "e", "i", "o", "u", "y", "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 let arrSorted = arrString.sorted(by: { (s1: Character, s2: Character) -> Bool in
-    let a = arrAlph.firstIndex(of: s1)
-    let b = arrAlph.firstIndex(of: s2)
-
+    let a = arrAlph.firstIndex(of: String(s1).lowercased())
+    let b = arrAlph.firstIndex(of: String(s2).lowercased())
     switch a {
     case nil:
         return false
@@ -80,4 +74,6 @@ return a
 
 let minElement = exFive(arrFive, {$0 != nil ? $0! > $1 : true})
 let maxElement = exFive(arrFive, {$0 != nil ? $0! < $1 : true})
-print("First of letters: \(minElement!), last of letters: \(maxElement!)")
+if (minElement != nil || maxElement != nil) {
+    print("First letter: \(minElement!), last letter: \(maxElement!)")
+}
