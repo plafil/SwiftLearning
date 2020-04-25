@@ -20,20 +20,20 @@ newArr.sorted(by: >) // по убыванию
 
 
 //3. Напишите функцию, которая принимает массив интов и клоужер и возвращает инт. Клоужер должен принимать 2 инта (один опшинал) и возвращать да или нет. В самой функции создайте опшинал переменную. Вы должны пройтись в цикле по массиву интов и сравнивать элементы с переменной используя клоужер. Если клоужер возвращает да, то вы записываете значение массива в переменную. в конце функции возвращайте переменную. Используя этот метод и этот клоужер найдите максимальный и минимальный элементы массива.
-func exThree(_ arr: [Int], _ clos: (Int?, Int) -> Bool) -> Int {
+func exThree(_ arr: [Int], _ clos: (Int?, Int) -> Bool) -> Int? {
     var a: Int?
     for i in arr {
         if clos(a, i) {
             a = i
         }
     }
-    return a!
+    return a
     }
 
 let arrThree = [5, 2, 9, 14, 12, 215, 60, 1, 4]
 let minOfArr = exThree(arrThree, {$0 != nil ? $0! > $1 : true})
 let maxOfArr = exThree(arrThree, {$0 != nil ? $0! < $1 : true})
-print("Maximum is \(maxOfArr), minimum is \(minOfArr)")
+print("Maximum is \(maxOfArr!), minimum is \(minOfArr!)")
 
 
 //4. Создайте произвольную строку. Преобразуйте ее в массив букв. Используя метод массивов sorted отсортируйте строку так, чтобы в начале шли гласные в алфавитном порядке, потом согласные, потом цифры, а потом символы
@@ -68,16 +68,16 @@ print("\n\(arrSorted)\n")
 //5. Проделайте задание №3 но для нахождения минимальной и максимальной буквы из массива букв (соответственно скалярному значению)
 let arrFive : [Character] = ["c", "e", "b", "o", "x", "u", "k"]
 
-func exFive(_ arr: [Character], _ clos: (Character?, Character) -> Bool) -> Character {
+func exFive(_ arr: [Character], _ clos: (Character?, Character) -> Bool) -> Character? {
 var a: Character?
 for i in arr {
     if clos(a, i) {
         a = i
     }
 }
-return a!
+return a
 }
 
 let minElement = exFive(arrFive, {$0 != nil ? $0! > $1 : true})
 let maxElement = exFive(arrFive, {$0 != nil ? $0! < $1 : true})
-print("First of letters: \(minElement), last of letters: \(maxElement)")
+print("First of letters: \(minElement!), last of letters: \(maxElement!)")
