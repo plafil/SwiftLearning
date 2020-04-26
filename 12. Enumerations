@@ -48,8 +48,6 @@ func figureDescription(figure: Chess) -> String {
         return "\(col) \(figureNames.Knight.rawValue), position: \(pos.0)\(pos.1)"
     case .Pawn(color: let col, position: let pos):
         return "\(col) \(figureNames.Pawn.rawValue), position: \(pos.0)\(pos.1)"
-    default:
-        break
     }
 }
 
@@ -124,8 +122,6 @@ func change(_ figure: inout Chess, newPosition: (String, Int)) {
             figure = .Knight(color: col, position: newPosition)
         case .Pawn(let col, _):
             figure = .Pawn(color: col, position: newPosition)
-        default:
-            break
         }
     default:
         print("You've entered incorrect chess line (\(newPosition.1)) or column (\(newPosition.0)) number, please try again!")
