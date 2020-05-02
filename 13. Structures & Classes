@@ -1,0 +1,209 @@
+//1. Создайте структуру студент. Добавьте свойства: имя, фамилия, год рождения, средний балл. Создайте несколько экземпляров этой структуры и заполните их данными. Положите их всех в массив (журнал).
+struct Student {
+    var name: String
+    var surname: String
+    var birthYear: Int
+    var avgMark: Float
+}
+
+let studOne = Student(name: "Ben", surname: "Smith", birthYear: 1995, avgMark: 4.5)
+let studTwo = Student(name: "Carl", surname: "James", birthYear: 1996, avgMark: 3.8)
+let studThree = Student(name: "Dave", surname: "Simus", birthYear: 1997, avgMark: 4.1)
+let studFour = Student(name: "Ian", surname: "Wright", birthYear: 1998, avgMark: 4.8)
+let studFive = Student(name: "Thomas", surname: "Smith", birthYear: 1994, avgMark: 3.2)
+
+let studentsJournal = [studOne, studTwo, studThree, studFour, studFive]
+
+print("\n---№2---")
+//2. Напишите функцию, которая принимает массив студентов и выводит в консоль данные каждого. Перед выводом каждого студента добавляйте порядковый номер в “журнале”, начиная с 1.
+func allStudents (_ stud: [Student]) {
+    for i in 0..<stud.count {
+        print("\(i+1). \(stud[i].name) \(stud[i].surname). Birth year: \(stud[i].birthYear), average mark: \(stud[i].avgMark)")
+    }
+}
+
+allStudents(studentsJournal)
+
+print("\n---№3---")
+//3. С помощью функции sorted отсортируйте массив по среднему баллу, по убыванию и распечатайте “журнал”.
+let studSortedMark = studentsJournal.sorted(by: {$0.avgMark > $1.avgMark})
+allStudents(studSortedMark)
+
+print("\n---№4---")
+//4. Отсортируйте теперь массив по фамилии (по возрастанию), причем если фамилии одинаковые, а вы сделайте так чтобы такое произошло, то сравниваются по имени. Распечатайте “журнал”.
+let studSortedSurname = studentsJournal.sorted(by: {(s1, s2) in
+    if s1.surname < s2.surname || (s1.surname == s2.surname && s1.name < s2.name) {
+        return true
+    } else {
+        return false
+    }
+})
+allStudents(studSortedSurname)
+
+print("\n---№5---")
+//5. Создайте переменную и присвойте ей ваш существующий массив. Измените в нем данные всех студентов. Изменится ли первый массив? Распечатайте оба массива.
+var newJournal = studentsJournal
+newJournal[0].name = "Ivan"
+newJournal[1].name = "Petr"
+newJournal[2].surname = "Ivanov"
+newJournal[3].surname = "Petrov"
+newJournal[4].birthYear = 1850
+
+print("Old journal:")
+allStudents(studentsJournal)
+print("\nNew journal:")
+allStudents(newJournal)
+
+print("\n---№6 (Classes)---")
+//6. Теперь проделайте все то же самое, но не для структуры Студент, а для класса. Какой результат в 5м задании? Что изменилось и почему?
+//6.1
+class StudentClass {
+    var name: String
+    var surname: String
+    var birthYear: Int
+    var avgMark: Float
+    
+    init(name: String, surname: String, birthYear: Int, avgMark: Float) {
+        self.name = name
+        self.surname = surname
+        self.birthYear = birthYear
+        self.avgMark = avgMark
+    }
+}
+
+let studClassOne = StudentClass(name: "Ben", surname: "Smith", birthYear: 1995, avgMark: 4.5)
+let studClassTwo = StudentClass(name: "Carl", surname: "James", birthYear: 1996, avgMark: 3.8)
+let studClassThree = StudentClass(name: "Dave", surname: "Simus", birthYear: 1997, avgMark: 4.1)
+let studClassFour = StudentClass(name: "Ian", surname: "Wright", birthYear: 1998, avgMark: 4.8)
+let studClassFive = StudentClass(name: "Thomas", surname: "Smith", birthYear: 1994, avgMark: 3.2)
+
+let studentsClassJournal = [studClassOne, studClassTwo, studClassThree, studClassFour, studClassFive]
+
+func allClassStudents (_ stud: [StudentClass]) {
+    for i in 0..<stud.count {
+        print("\(i+1). \(stud[i].name) \(stud[i].surname). Birth year: \(stud[i].birthYear), average mark: \(stud[i].avgMark)")
+    }
+}
+
+print("Old journal (Class) before change:")
+allClassStudents(studentsClassJournal)
+
+var newClassJournal = studentsClassJournal
+newClassJournal[0].name = "Ivan"
+newClassJournal[1].name = "Petr"
+newClassJournal[2].surname = "Ivanov"
+newClassJournal[3].surname = "Petrov"
+newClassJournal[4].birthYear = 1850
+
+print("\nNew journal:")
+allClassStudents(newClassJournal)
+print("\nOld journal after change:")
+allClassStudents(studentsClassJournal)
+
+print("\n---№7 (Chess)---")
+//007. Выполните задание шахмат из урока по энумам используя структуры либо классы (задания из урока по enum ниже)
+//7.1. Создать энум с шахматными фигруами (король, ферзь и т.д.). Каждая фигура должна иметь цвет белый либо черный (надеюсь намек понят), а так же букву и цифру для позиции. Создайте пару фигур с расположением на доске, так, чтобы черному королю был мат :) Поместите эти фигуры в массив фигур
+struct ChessFigures {
+    var type: Chess
+    var color: ColorChess
+    var position: (String, Int)
+    enum ColorChess {
+        case White, Black
+    }
+    enum Chess {
+        case King, Queen, Rock, Bishop, Knight, Pawn
+    }
+}
+
+var whiteKing = ChessFigures(type: .King, color: .White, position: ("D", 1))
+var whiteQueen = ChessFigures(type: .Queen, color: .White, position: ("H", 7))
+var whiteRock = ChessFigures(type: .Rock, color: .White, position: ("A", 8))
+var whiteBishop = ChessFigures(type: .Bishop, color: .White, position: ("C", 1))
+var blackKing = ChessFigures(type: .King, color: .Black, position: ("D", 8))
+var blackPawn = ChessFigures(type: .Pawn, color: .Black, position: ("F", 4))
+var blackKnight = ChessFigures(type: .Knight, color: .Black, position: ("H", 6))
+
+let figures = [whiteKing, whiteQueen, whiteRock, whiteBishop, blackKing, blackPawn, blackKnight]
+
+
+//7.2. Сделайте так, чтобы энумовские значения имели rawValue типа String. Каждому типу фигуры установите соответствующее английское название. Создайте функцию, которая выводит в консоль (текстово, без юникода) название фигуры, цвет и расположение. Используя эту функцию распечатайте все фигуры в массиве.
+func figureDescription(_ figure: ChessFigures) {
+    print("\(figure.color) \(figure.type), position: \(figure.position.0)\(figure.position.1)")
+}
+
+for i in 0..<figures.count {
+    figureDescription(figures[i])
+}
+
+print("\n---7.3---")
+//7.3. Используя красивые юникод представления шахматных фигур, выведите в консоли вашу доску. Если клетка не содержит фигуры, то используйте белую или черную клетку. Это должна быть отдельная функция, которая распечатывает доску с фигурами (принимает массив фигур и ничего не возвращает)
+
+func chessTable(_ figure: [ChessFigures]) {
+    print("\n ", "A", "B", "C", "D", "E", "F", "G", "H")
+    var str = [" " : " "]
+    for i in (1...8).reversed() {
+        if i % 2 == 0 {
+            str = ["A": "□", "B": "■", "C": "□", "D": "■", "E": "□", "F": "■", "G": "□", "H": "■"]
+        } else {
+            str = ["A" : "■", "B" : "□", "C" : "■", "D" : "□", "E" : "■", "F" : "□", "G" : "■", "H" : "□"]
+        }
+
+        for fig in figure {
+            switch fig.type {
+            case .King where fig.position.1 == i:
+                if fig.color == .White {
+                    str[fig.position.0] = "♔"
+                } else {
+                    str[fig.position.0] = "♚"}
+            case .Queen where fig.position.1 == i:
+                if fig.color == .White {
+                    str[fig.position.0] = "♕"
+                } else {
+                    str[fig.position.0] = "♛"}
+            case .Rock where fig.position.1 == i:
+                if fig.color == .White {
+                    str[fig.position.0] = "♖"
+                } else {
+                    str[fig.position.0] = "♜"}
+            case .Bishop where fig.position.1 == i:
+                if fig.color == .White {
+                    str[fig.position.0] = "♗"
+                } else {
+                    str[fig.position.0] = "♝"}
+            case .Knight where fig.position.1 == i:
+                if fig.color == .White {
+                    str[fig.position.0] = "♘"
+                } else {
+                    str[fig.position.0] = "♞"}
+            case .Pawn where fig.position.1 == i:
+                if fig.color == .White {
+                    str[fig.position.0] = "♙"
+                } else {
+                    str[fig.position.0] = "♟"}
+            default:
+                break
+            }            
+        }
+        print(i, str["A"]!, str["B"]!, str["C"]!, str["D"]!, str["E"]!, str["F"]!, str["G"]!, str["H"]!)
+    }
+}
+
+chessTable(figures)
+
+print("\n---7.4---")
+//7.4. Создайте функцию, которая будет принимать шахматную фигуру и тюпл новой позиции. Эта функция должна передвигать фигуру на новую позицию, причем перемещение должно быть легальным: нельзя передвинуть фигуру за пределы поля. Вызовите эту функцию для нескольких фигур и распечатайте поле снова.
+func change(_ figure: inout ChessFigures, newPosition: (String, Int)) {
+    switch newPosition {
+    case ("A"..."H", 1...8):
+        figure.position = newPosition
+    default:
+        print("You've entered incorrect chess line (\(newPosition.1)) or column (\(newPosition.0)) number, please try again!")
+    }
+}
+
+change(&whiteKing, newPosition: ("E", 1))
+change(&whiteQueen, newPosition: ("B", 1))
+change(&blackPawn, newPosition: ("F", 3))
+
+let figuresNew = [whiteKing, whiteQueen, whiteRock, whiteBishop, blackKing, blackPawn, blackKnight]
+chessTable(figuresNew)
