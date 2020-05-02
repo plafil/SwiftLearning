@@ -1,0 +1,113 @@
+//1. Создать структуру студент (по аналогии с уроком - имя, фамилия, полное имя). Добавить студенту property «Дата рождения» (пусть это будет еще одна структура, содержащая день, месяц, год) и два computed property: первое — вычисляющее его возраст, второе — вычисляющее, сколько лет он учился (считать, что он учился в школе с 6 лет, если студенту меньше 6 лет — возвращать 0)
+import Foundation
+
+print("---Ex. 1---")
+
+func yearDifference(year: Int, month: Int, day: Int) -> Int {
+    let currY = Calendar.current.component(.year, from: Date())
+    let currM = Calendar.current.component(.month, from: Date())
+    let currD = Calendar.current.component(.day, from: Date())
+    var diff = currY - year
+    if diff > 0 && ( currM < month || (currM == month && currD < day) ) {
+        diff -= 1
+    } else if diff <= 0 {
+        diff = 0
+    }
+    return diff
+}
+
+struct Student {
+    var firstName: String {
+        didSet {
+            firstName = firstName.capitalized
+        }
+    }
+    var lastName: String {
+        didSet {
+            lastName = lastName.capitalized
+        }
+    }
+    var fullName: String {
+        get {
+            return firstName + " " + lastName
+        }
+        set {
+            let parts = newValue.components(separatedBy: " ")
+            if parts.count > 0 {
+                firstName = parts[0]
+            }
+            if parts.count > 1 {
+                lastName = parts[1]
+            }
+        }
+    }
+    
+    struct BirthDate {
+        var year, month, day: Int
+    }
+
+    var dateOfBirth: BirthDate
+    
+    var age: Int {
+        return yearDifference(year: dateOfBirth.year, month: dateOfBirth.month, day: dateOfBirth.day)
+    }
+    
+    var yearsOfStudy: Int {
+        get {
+            var years = age - 6
+            if age < 6 {
+                years = 0
+            }
+            return years
+        }
+    }
+    
+}
+
+var stud = Student(firstName: "Ivan", lastName: "Petrov", dateOfBirth: Student.BirthDate(year: 2001, month: 11, day: 25))
+
+print("Student: \(stud.fullName) (birth date: \(stud.dateOfBirth.day).\(stud.dateOfBirth.month).\(stud.dateOfBirth.year))\nAge: \(stud.age). Years of study: \(stud.yearsOfStudy).")
+
+
+//2. Создать структуру «Отрезок», содержащую две внутренние структуры «Точки». Структуру «Точка» создать самостоятельно, несмотря на уже имеющуюся в Swift. Таким образом, структура «Отрезок» содержит две структуры «Точки» — точки A и B (stored properties). Добавить два computed properties: «середина отрезка» и «длина» (считать математическими функциями). При изменении середины отрезка должно меняться положение точек A и B. При изменении длины, меняется положение точки B.
+print("\n---Ex. 2---")
+
+struct Dot {
+    var x, y: Double
+}
+
+struct LineSegment {
+    
+    var dotA, dotB: Dot
+    
+    var middle: Dot {
+        get {
+            return Dot(x: (dotA.x + dotB.x) / 2, y: (dotA.y + dotB.y) / 2)
+        }
+        set {
+            let diffX = newValue.x - middle.x
+            let diffY = newValue.y - middle.y
+            dotA = Dot(x: dotA.x + diffX, y: dotA.y + diffY)
+            dotB = Dot(x: dotB.x + diffX, y: dotB.y + diffY)
+        }
+    }
+    
+    var length: Double {
+        get {
+            return sqrt(pow(dotA.x - dotB.x, 2) + pow(dotA.y - dotB.y, 2))
+        }
+        set {
+            let diffL = newValue / length
+            dotB = Dot(x: dotA.x + (dotB.x - dotA.x) * diffL, y: dotA.y + (dotB.y - dotA.y) * diffL)
+        }
+    }
+}
+
+var segment = LineSegment(dotA: Dot(x: 3, y: 1), dotB: Dot(x: 5, y: 3))
+print("The original line segment:\nDot A: x = \(segment.dotA.x), y = \(segment.dotA.y); dot B: x = \(segment.dotB.x), y = \(segment.dotB.y)\nMiddle dot: x = \(segment.middle.x), y = \(segment.middle.y); length = \(String(format: "%.2f", segment.length))\n")
+
+segment.middle = Dot(x: -4, y: 1)
+print("The line segment after changing the middle dot (coordinate of both dots A and B have changed):\nDot A: x = \(segment.dotA.x), y = \(segment.dotA.y); dot B: x = \(segment.dotB.x), y = \(segment.dotB.y)\nMiddle dot: x = \(segment.middle.x), y = \(segment.middle.y); length = \(String(format: "%.2f", segment.length))\n")
+
+segment.length = 2 * sqrt(8)
+print("The line segment after changing the length (coordinates of the dot A have stayed as before, coordinates of the dot B have changed):\nDot A: x = \(segment.dotA.x), y = \(segment.dotA.y); dot B: x = \(segment.dotB.x), y = \(segment.dotB.y)\nMiddle dot: x = \(segment.middle.x), y = \(segment.middle.y); length = \(String(format: "%.2f", segment.length))")
