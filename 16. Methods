@@ -1,0 +1,139 @@
+//Сделаем с вами небольшую игру
+//1. Создайте тип Комната. У комнаты есть размеры W на H. И создайте тип Персонаж. У него есть координата в комнате X и Y. Реализуйте функцию, которая красиво текстом будет показывать положение персонажа в комнате
+//2. Персонажу добавьте метод идти, который принимает энум лево, право, вперед, назад. Этот метод должен передвигать персонажа. Реализуйте правило что персонаж не должен покинуть пределы комнаты. Подвигайте персонажа и покажите это графически
+//3. Создать тип Ящик. У ящика также есть координата в комнате X и Y. Ящик также не может покидать пределы комнаты и ящик также должен быть распечатан вместе с персонажем в функции печати.
+//4. Теперь самое интересное, персонаж может двигать ящик, если он стоит на том месте, куда персонаж хочет попасть. Главное что ни один объект не может покинуть пределы комнаты. Подвигайте ящик.
+//5. Добавьте точку в комнате, куда надо ящик передвинуть и двигайте.
+//6. Добавить массив ящиков
+
+struct Room {
+    let dimensions: (w: Int, h: Int)
+    var person: Person {
+        didSet {
+            switch person.coordinates {
+            case (x: 1...self.dimensions.w, y: 1...self.dimensions.h):
+                break
+            default:
+                person = oldValue
+            }
+        }
+    }
+    var boxArray: [Box] {
+        didSet {
+            for i in boxArray {
+                switch i.coordinates {
+                case (x: 1...self.dimensions.w, y: 1...self.dimensions.h):
+                    break
+                default:
+                    boxArray = oldValue
+                }
+            }
+            
+        }
+    }
+    var target: Target
+    
+    func showElements() {
+        var isCompleted = true
+        let border = ([String](repeating: "⬛", count: self.dimensions.w + 2)).joined(separator: " ")
+        let arrSq = [String](repeating: "⬜", count: self.dimensions.w)
+        print("\nCurrent position of the person and box(es) in the room:")
+        print(border)
+            for i in (1...self.dimensions.h).reversed() {
+                var arr = arrSq
+                for box in self.boxArray {
+                    if i == self.person.coordinates.y {
+                        arr[self.person.coordinates.x - 1] = Person.sign
+                    }
+                    if i == self.target.coordinates.y && self.target.coordinates != self.person.coordinates {
+                        arr[self.target.coordinates.x - 1] = Target.sign
+                    }
+                    if i == box.coordinates.y && box.coordinates != self.person.coordinates && box.coordinates != self.target.coordinates {
+                        arr[box.coordinates.x - 1] = Box.sign
+                    }
+                    if self.target.coordinates != box.coordinates {
+                        isCompleted = false
+                    }
+                }
+                print("⬛ \(arr.joined(separator: " ")) ⬛")
+        }
+        print(border)
+        if isCompleted == true {
+            print("You win! 👍👍👍")
+        }
+    }
+    
+}
+
+struct Person {
+    static let sign = "👨"
+    var coordinates = (x: 1, y: 1)
+    
+    mutating func move(direction: Direction, room: inout Room) {
+        var change = (x: 0, y: 0)
+        switch direction {
+        case .Left:
+            change = (-1, 0)
+        case .Right:
+            change = (1, 0)
+        case .Forward:
+            change = (0, 1)
+        case .Back:
+            change = (0, -1)
+        }
+        room.person.coordinates.x += change.x
+        room.person.coordinates.y += change.y
+        
+        for i in 0..<room.boxArray.count {
+            if room.person.coordinates == room.boxArray[i].coordinates {
+                room.boxArray[i].coordinates.x += change.x
+                room.boxArray[i].coordinates.y += change.y
+            }
+        }
+        room.showElements()
+    }
+}
+    
+struct Box {
+    static let sign = "📦"
+    var coordinates: (x: Int, y: Int)
+}
+
+struct Target {
+    static let sign = "❎"
+    var coordinates: (x: Int, y: Int)
+}
+
+enum Direction {
+    case Left
+    case Right
+    case Forward
+    case Back
+}
+
+
+var pers = Person()
+var boxes = [Box(coordinates: (3, 2)), Box(coordinates: (7,3))]
+var room = Room(dimensions: (10, 5), person: pers, boxArray: boxes, target: Target(coordinates: (8, 4)))
+room.showElements()
+
+//передвижение ящиков на целевую точку:
+//pers.move(direction: .Right, room: &room)
+//pers.move(direction: .Right, room: &room)
+//pers.move(direction: .Forward, room: &room)
+//pers.move(direction: .Forward, room: &room)
+//pers.move(direction: .Left, room: &room)
+//pers.move(direction: .Forward, room: &room)
+//pers.move(direction: .Right, room: &room)
+//pers.move(direction: .Right, room: &room)
+//pers.move(direction: .Right, room: &room)
+//pers.move(direction: .Right, room: &room)
+//pers.move(direction: .Right, room: &room)
+//pers.move(direction: .Left, room: &room)
+//pers.move(direction: .Back, room: &room)
+//pers.move(direction: .Back, room: &room)
+//pers.move(direction: .Right, room: &room)
+//pers.move(direction: .Forward, room: &room)
+//pers.move(direction: .Left, room: &room)
+//pers.move(direction: .Forward, room: &room)
+//pers.move(direction: .Right, room: &room)
