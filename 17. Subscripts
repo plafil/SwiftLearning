@@ -1,0 +1,136 @@
+//Шахматная доска
+//1. Создайте тип шахматная доска.
+//2. Добавьте сабскрипт, который выдает цвет клетки по координате клетки (буква и цифра).
+//3. Если юзер ошибся координатами - выдавайте нил
+class Chess {
+    enum Color {
+        case White, Black
+    }
+    var square = [String : Color]()
+    
+    subscript(column: String, raw: Int) -> Color? {
+        get {
+            if let a = square[column.lowercased() + String(raw)] {
+                return a
+            } else {
+                return nil
+            }
+        }
+    }
+    
+    init() {
+        let arrLetters = ["a", "b", "c", "d", "e", "f", "g", "h"]
+        for r in 1...8 {
+            for c in 1...8 {
+                if (r + c) % 2 == 0 {
+                    self.square[arrLetters[c-1] + String(r)] = Color.Black
+                } else {
+                    self.square[arrLetters[c-1] + String(r)] = Color.White
+                }
+            }
+        }
+    }
+}
+
+//var chess = Chess()
+//chess["d", 5]
+
+
+//Крестики-нолики
+//1. Создать тип, представляющий собой поле для игры в крестики нолики
+//На каждой клетке может быть только одно из значений: Пусто, Крестик, Нолик
+//Добавьте возможность красиво распечатывать поле
+//2. Добавьте сабскрипт, который устанавливает значение клетки по ряду и столбцу,
+//причем вы должны следить за тем, чтобы программа не падала если будет введен не существующий ряд или столбец.
+//3. Также следите за тем, чтобы нельзя было устанавливать крестик либо нолик туда, где уже что-то есть. Добавьте метод очистки поля.
+//4. Если хотите, добавте алгоритм, который вычислит победителя
+
+class CrossesAndNoughts {
+    var field = [String : Sign.RawValue]()
+    
+    enum Sign: String {
+        case Empty = "⬜"
+        case Cross = "❌"
+        case Nought = "⭕"
+    }
+    
+    subscript(column: String, raw: Int) -> String? {
+        get {
+            if let symbol = field[column.lowercased() + String(raw)] {
+                return symbol
+            } else {
+                return nil
+            }
+        }
+    }
+
+    // метод для распечатывания поля:
+    func showField() {
+        print("\n   A  B  C")
+        for i in 1...3 {
+            print(i, field["a" + String(i)]!, field["b" + String(i)]!, field["c" + String(i)]!)
+        }
+    }
+
+    // метод установки фигуры:
+    func setFigure(column: String, raw: Int, s: Sign) {
+        if self[column.lowercased(), raw] == Sign.Empty.rawValue {
+            field[column.lowercased() + String(raw)] = s.rawValue
+            showField()
+            if checkWin() {
+                print("Player \(s.rawValue) wins!")
+                clean()
+            }
+        } else if self[column.lowercased(), raw] == nil {
+            print("\nYou've entered incorrect path to cross'n'noughts square, please try again!")
+        } else if self[column.lowercased(), raw] != Sign.Empty.rawValue {
+            print("\nSquare \(column)\(raw) is not empty, please try again!")
+        }
+    }
+
+    // метод очистки поля:
+    func clean() {
+        let arrLetters = ["a", "b", "c"]
+        for r in 1...3 {
+            for c in 1...3 {
+                field[arrLetters[c-1] + String(r)] = Sign.Empty.rawValue
+            }
+        }
+    }
+
+    // метод для вычисления победителя:
+    func checkWin() -> Bool {
+        var win = false
+        let arrLetters = ["a", "b", "c"]
+
+        for i in 0...2 {
+            let s = self[arrLetters[i], i+1]
+            if s != nil && s != Sign.Empty.rawValue {
+                // проверка по вертикальным и горизонтальным строкам:
+                if (s == self[arrLetters[i], (i + 1) % 3 + 1] && s == self[arrLetters[i], (i + 1) % 3 + 2]) || (s == self[arrLetters[(i + 1) % 3], i + 1] && s == self[arrLetters[(i + 2) % 3], i + 1]) {
+                    win = true
+                    break
+                } // проверка по диагонали:
+                else if i == 1 && ( (s == self["a", 1] && s == self["c", 3]) || (s == self["c", 1] && s == self["a", 3]) ) {
+                    win = true
+                    break
+                }
+            }
+        }
+        return win
+    }
+  
+    init() {
+        clean()
+    }
+    
+}
+
+//var cnn = CrossesAndNoughts()
+//cnn.setFigure(column: "B", raw: 2, s: .Cross)
+//cnn["B", 2]
+//cnn.setFigure(column: "C", raw: 3, s: .Nought)
+//cnn.setFigure(column: "B", raw: 1, s: .Cross)
+//cnn.setFigure(column: "B", raw: 3, s: .Nought)
+//cnn.setFigure(column: "C", raw: 1, s: .Cross)
+//cnn.setFigure(column: "a", raw: 3, s: .Nought)
