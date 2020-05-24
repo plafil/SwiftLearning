@@ -1,0 +1,142 @@
+//1. У нас есть базовый класс "Артист" и у него есть имя и фамилия. И есть метод "Выступление". У каждого артиста должно быть свое выступление: танцор танцует, певец поет и тд. А для художника, что бы вы не пытались ставить, пусть он ставит что-то свое (пусть меняет имя на свое артистическое). Когда вызываем метод "выступление" показать в консоле имя и фамилию артиста и собственно само выступление.
+//Полиморфизм используем для артистов. Положить их всех в массив, пройтись по нему и вызвать их метод "выступление"
+print("--- Ex. 1 ---")
+
+class Artist {
+    let name, surname: String
+    
+    func doShow() {
+        print(name + " " + surname)
+    }
+    
+    init(name: String, surname: String) {
+        self.name = name
+        self.surname = surname
+    }
+}
+
+class Dancer : Artist {
+    override func doShow() {
+        super.doShow()
+        print("I'm dancing\n")
+    }
+}
+
+class Singer : Artist {
+    override func doShow() {
+        super.doShow()
+        print("I'm singing\n")
+    }
+}
+
+class Painter : Artist {
+    override func doShow() {
+        super.doShow()
+        print("My nickname is SuperPainter\(name)\n")
+    }
+}
+
+let carl = Dancer(name: "Alex", surname: "Zammer")
+let paul = Painter(name: "Paul", surname: "Strange")
+let peter = Singer(name: "Peter", surname: "Holland")
+
+let artists = [carl, paul, peter]
+
+for i in artists {
+    i.doShow()
+}
+
+
+//2. Создать базовый клас "транспортное средство" и добавить три разных проперти: скорость, вместимость и стоимость одной перевозки (computed). Создайте несколько дочерних класов и переопределите их компютед проперти у всех. Создайте класс самолет, корабль, вертолет, машина и у каждого по одному объекту. В компютед пропертис каждого класса напишите свои значения скорости, вместимости, стоимости перевозки. + у вас должен быть свой метод который считает сколько уйдет денег и времени что бы перевести из пункта А в пункт В определенное количество людей с использованимем наших транспортных средств. Вывести в кольсоль результат (как быстро сможем перевести, стоимость, количество перевозок). Используем полиморфизм
+print("--- Ex. 2 ---")
+
+class Vehicle {
+    var speed: Int {
+        0
+    }
+    var capacity: Int {
+        0
+    }
+    var costForKm: Int {
+        0
+    }
+}
+
+class Plane : Vehicle {
+    override var speed: Int {
+        1000
+    }
+    override var capacity: Int {
+        150
+    }
+    override var costForKm: Int {
+        3000
+    }
+}
+let plane = Plane()
+
+class Ship : Vehicle {
+    override var speed: Int {
+        40
+    }
+    override var capacity: Int {
+        1500
+    }
+    override var costForKm: Int {
+        2000
+    }
+}
+let ship = Ship()
+
+class Helicopter : Vehicle {
+    override var speed: Int {
+        300
+    }
+    override var capacity: Int {
+        10
+    }
+    override var costForKm: Int {
+        1000
+    }
+}
+let helic = Helicopter()
+
+class Car : Vehicle {
+    override var speed: Int {
+        100
+    }
+    override var capacity: Int {
+        5
+    }
+    override var costForKm: Int {
+        5
+    }
+}
+let car = Car()
+
+func calculateRouteParameters(vehicle veh: Vehicle, distanceInKm dis: Int, countOfPersons count: Int) -> (time: Float, price: Int, trips: Int) {
+    
+    var trips = 0
+    if count % veh.capacity == 0 {
+        trips = count / veh.capacity
+    } else {
+        trips = count / veh.capacity + 1
+    }
+    
+    var fullTime: Float = 0
+    var cost = 0
+    let timeForTrip: Float = Float(dis) / Float(veh.speed)
+    // Если достаточно одной поездки, то полное время равно времени одной поездки, стоимость рассчитывается за одну поездку из п. А в п. B. В ином случае необходимо будет возвращаться в точку А (X-1) раз, где X = число необходимых поездок (в последнюю поездку возвращаться не нужно, т.к. все люди уже перевезены), т.о. стоимость также рассчитывается за [2X-1] поездок.
+    if trips == 1 {
+        fullTime = timeForTrip
+        cost = veh.costForKm * dis
+    } else {
+        fullTime = timeForTrip * Float(trips * 2 - 1)
+        cost = veh.costForKm * dis * (trips * 2 - 1)
+    }
+
+    return (fullTime, cost, trips)
+}
+
+let parameters = calculateRouteParameters(vehicle: plane, distanceInKm: 2000, countOfPersons: 160)
+print("Time for all people's transportation: \(parameters.time) hours\nPrice of transportation: \(parameters.price) rubles\nNumber of trips: \(parameters.trips)")
