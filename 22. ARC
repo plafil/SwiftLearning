@@ -1,0 +1,139 @@
+//Рассмотрим такую ситуацию: есть семья - папа, мама и дети.
+//Папа глава семьи, у него есть Мама, Мама контролирует детей, т.е. иерархия: Папа - Мама - Дети, Дети на одном уровне.
+//Дети могут вызывать друг друга и они могут искать пути, как общаться с другими Детьми, например говорить "дай игрушку", спрашивать Маму: "Мама, дай конфетку", общаться с Папой: "Папа, купи игрушку".
+//Вся эта иерархия лежит в объекте класса Семья, у которого есть методы, например распечатать всю Семью, т.е. метод вернёт массив всех членов Семьи.
+//У Папы есть 3 кложера (closures) - 1. когда он обращается к Семье - распечатать всю Семью, 2. распечатать Маму, 3. распечатать всех Детей.
+//Создать всю иерархию со связями. При выходе из зоны видимости все объекты должны быть уничтожены. Используем Command-Line Tool.
+	
+class Father {
+    weak var mother: Mother!
+    
+    lazy var callFamily: () -> () = {
+        [unowned self] in
+        self.printFather()
+        self.mother.printMother()
+        for i in 0..<self.mother.children.count {
+            self.mother.children[i].printChild()
+        }
+    }
+    
+    lazy var callMother: () -> () = {
+        [unowned self] in
+        self.mother.printMother()
+    }
+    
+    lazy var callChildren: () -> () = {
+        [unowned self] in
+        let count = self.mother.children.count
+        if count > 0 {
+            for i in 0..<count {
+                self.mother.children[i].printChild()
+            }
+        } else {
+            print("This family has no children!")
+        }
+    }
+    
+    func printFather() {
+        print("I'm father")
+    }
+    
+    func buyToy() {
+        print("Father, buy me a toy!")
+    }
+    
+    
+    deinit {
+        print("goodbye father")
+    }
+}
+
+class Mother {
+    var children = [Children]()
+    
+    func printMother() {
+        print("I'm mother")
+    }
+    
+    func giveCandy() {
+        print("Mother, give me a candy!")
+    }
+
+    deinit {
+        print("goodbye mother")
+    }
+}
+
+class Children {
+    var name: String!
+    weak var father: Father!
+    
+    func printChild() {
+        print("I'm \(name ?? "child")")
+    }
+    
+    func giveToy() {
+        let ch = self.father.mother.children
+        if ch.count > 1 {
+            for i in 0..<ch.count {
+                if ch[i] !== self {
+                    print("\(ch[i].name!), give me your toy!")
+                }
+            }
+        }
+    }
+    
+    deinit {
+        print("goodbye \(name ?? "child")")
+    }
+}
+
+class Family {
+    let surname: String
+    let numberOfChildren: UInt8
+    var father: Father
+    var mother: Mother
+    var children = [Children]()
+    
+    func showAll() {
+        print(self.surname, "family:")
+        father.printFather()
+        mother.printMother()
+        for i in 0..<children.count {
+            children[i].printChild()
+        }
+    }
+    
+        
+    init(surname: String, numberOfChildren: UInt8) {
+        self.surname = surname
+        self.numberOfChildren = numberOfChildren
+        self.father = Father()
+        self.mother = Mother()
+        self.father.mother = self.mother
+        
+        if numberOfChildren > 0 {
+            for child in 1...numberOfChildren {
+                let newChild = Children()
+                newChild.name = "Child No. \(child)"
+                newChild.father = self.father
+                children.append(newChild)
+            }
+            self.mother.children = self.children
+        }
+    }
+    
+    deinit {
+        print("goodbye family")
+    }
+}
+
+// Создание семьи и использование описанных в задании методов и замыканий с последующей деинициализацией при выходе из зоны видимости:
+if true {
+    let ivanovyFamily = Family(surname: "Ivanov", numberOfChildren: 4)
+    ivanovyFamily.showAll()
+    ivanovyFamily.children[0].giveToy()
+    ivanovyFamily.children[0].father.buyToy()
+    ivanovyFamily.children[0].father.mother.giveCandy()
+    ivanovyFamily.father.callChildren()
+}
