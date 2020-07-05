@@ -1,0 +1,159 @@
+//1. Сделать класс Человек, у этого класса будут проперти Папа, Мама, Братья, Сестры (всё опционально).
+//Сделать примерно 30 человек, взять одного из них, поставить ему Папу/Маму. Папе и Маме поставить Пап/Мам/Братьев/Сестер. Получится большое дерево иерархии.
+//Посчитать, сколько у этого человека двоюродных Братьев, троюродных Сестёр, Теть, Дядь, итд
+//2. Все сестры, матери,... должны быть класса Женщина, Папы, братья,... класса Мужчины.
+//У Мужчин сделать метод Двигать_диван, у Женщин Дать_указание (двигать_диван). Всё должно работать как и ранее.
+//Всех этих людей положить в массив Семья, пройти по массиву посчитать количество Мужчин и Женщин, для каждого Мужчины вызвать метод Двигать_диван, для каждой женщины Дать_указание.
+//3. Расширить класс человек, у него будет проперти Домашние_животные. Животные могут быть разные (попугаи, кошки, собаки...) их может быть несколько, может и не быть вообще.
+//Раздать некоторым людям домашних животных. Пройти по всему массиву людей. Проверить каждого человека на наличие питомца, если такой есть - добавлять всех животных в массив животных. Посчитать сколько каких животных в этом массиве.
+//Вся эта живность должна быть унаследована от класса Животные. У всех животных должен быть метод Издать_звук(крик) и у каждого дочернего класса этот метод переопределён на свой, т.е. каждое животное издаёт свой звук.
+//Когда проходим по массиву животных, каждый представитель вида животных должен издать свой звук.
+//Обязательно используем в заданиях Optional chaining и Type casting
+
+class Human {
+    var father: Man?
+    var mother: Woman?
+    var brothers: [Man]?
+    var sisters: [Woman]?
+    var pet: Pet?
+}
+
+class Man : Human {
+    func moveSofa() {
+        print("I'm moving sofa")
+    }
+}
+
+class Woman : Human {
+    func askMoveSofa() {
+        print("Man, please move sofa!")
+    }
+}
+
+class Pet {
+    func makeSound() {}
+}
+
+class Cat : Pet {
+    override func makeSound() {
+        print("Meow")
+    }
+}
+
+class Dog : Pet {
+    override func makeSound() {
+        print("Bark")
+    }
+}
+
+class Owl : Pet {
+    override func makeSound() {
+        print("Ooooh, Ooooooh")
+    }
+}
+
+var Alex = 	Man()
+var Ben = Man()
+var Caroline = Woman()
+var Diana = Woman()
+var Erica = Woman()
+var Frank = Man()
+var Genry = Man()
+var Hugo = Man()
+var Ian = Man()
+var James = Man()
+var Kate = Woman()
+var Loreen = Woman()
+var Max = Man()
+var Nina = Woman()
+var Olga = Woman()
+var Peter = Man()
+var Queen = Woman()
+var Richy = Man()
+var Sam = Man()
+var Thomas = Man()
+var Ursula = Woman()
+var Valtery = Man()
+var Winona = Woman()
+var Xenia = Woman()
+var Yuri = Man()
+var Zack = Man()
+var humanArray = [Alex, Ben, Caroline, Diana, Erica, Frank, Genry, Hugo, Ian, James, Kate, Loreen, Max, Nina, Olga, Peter, Queen, Richy, Sam, Thomas, Ursula, Valtery, Winona, Xenia, Yuri, Zack]
+
+//Устанавливаем отца и мать для Alex, отцу и матери устанавливаем отца/мать/братьев/сестер
+Alex.father = Ben
+Alex.mother = Caroline
+
+Ben.father = Frank
+Ben.mother = Kate
+Ben.sisters = [Loreen, Nina, Olga]
+Ben.brothers = [Genry, Hugo]
+
+Caroline.father = Max
+Caroline.mother = Diana
+Caroline.brothers = [James, Peter, Richy]
+Caroline.sisters = [Erica, Ursula]
+
+// считаем число дядь и тёть Alex
+var alexUncles = 0
+if let a = Alex.father?.brothers?.count {
+    alexUncles += a
+}
+if let a = Alex.mother?.brothers?.count {
+    alexUncles += a
+}
+alexUncles
+
+var alexAunts = 0
+if let a = Alex.father?.sisters?.count {
+    alexAunts += a
+}
+if let a = Alex.mother?.sisters?.count {
+    alexAunts += a
+}
+alexAunts
+
+// добавляем некоторым людям домашних животных
+Ben.pet = Owl()
+Erica.pet = Cat()
+Frank.pet = Dog()
+Hugo.pet = Cat()
+Kate.pet = Cat()
+Loreen.pet = Dog()
+Peter.pet = Cat()
+Queen.pet = Cat()
+Thomas.pet = Cat()
+Xenia.pet = Dog()
+Zack.pet = Cat()
+
+// создадим массив животных, пройдем по массиву людей и добавим всех животных в новый массив
+var petsArray = [Pet]()
+for human in humanArray {
+    if let pet = human.pet {
+        petsArray.append(pet)
+    }
+}
+
+// посчитаем, сколько животных каждого вида в массиве животных + когда будем проходить по массиву животных, каждое животное издаст свой звук
+var cats = 0
+var dogs = 0
+var owls = 0
+
+for pet in petsArray {
+    pet.makeSound()
+    switch pet {
+    case is Cat:
+        cats += 1
+    case is Dog:
+        dogs += 1
+    case is Owl:
+        owls += 1
+    default:
+        break
+    }
+}
+
+petsArray.count
+cats
+dogs
+owls
